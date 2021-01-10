@@ -1,4 +1,8 @@
+import moment from "moment";
+
 const CONFIG = {
+    monthYear: moment().format('MMMM-YYYY'),
+    currentDate: moment().format('DD'),
     SLOT_START: '7:30',
     SLOT_END: '16:30',
     SLOT_DURATION: 30,

@@ -5,6 +5,7 @@ import _ from "lodash";
 
 import './App.css';
 import SlotCards from './SlotCards';
+import config from "./config";
 import { GetVehicles } from "./apiServices";
 
 const { Header, Footer, Content } = Layout;
@@ -13,7 +14,7 @@ class App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      currentDate: moment(),
+      currentDate: config.currentDate,
       vehicles: []
     };
   }
@@ -46,7 +47,7 @@ class App extends React.Component {
             </Col>
           </Row>)}
         </Content>
-        <Footer style={{ textAlign: 'center', bottom: 0 }}>Vehicle Slot Booking ©2021</Footer>
+        <Footer style={{ textAlign: 'center', bottom: 0 }}>Vehicle Slot Booking © 2021</Footer>
       </Layout>
     );
   }
