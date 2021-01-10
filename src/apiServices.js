@@ -9,7 +9,8 @@ firebase.initializeApp(config.firebaseConfig);
 
 const db = firebase.firestore();
 
-const month = moment().format('MMMM');
+const monthYear = moment().format('MMMM-YYYY');
+const currentDate = moment().format('DD');
 
 const GetVehicles = async () => {
     let result = [];
@@ -28,54 +29,40 @@ const GetVehicles = async () => {
     return result;
 };
 
-const GetSlots = async (monDocID, vehicleDocID) => {
+const GetSlots = async () => {
     let result = [];
-    await db
-      .collection(month)
-      .doc(monDocID)
-      .collection("vehicles")
-      .doc(vehicleDocID)
-      .collection("slots")
-      .get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          result.push({
-            doc_id: doc.id,
-            is_occupied: doc.data().is_occupied,
-            occupant: doc.data().occupant,
-            slot: doc.data().slot,
-          });
+    let querySnapshot = await db.collection(monthYear).doc(currentDate).collection('slots').get();
+    _.forEach(querySnapshot.docs, (doc) => {
+        result.push({
+            slot: doc.id,
+            is_occupied: true,
+            emp_pb_no: doc.data().emp_pb_no,
+            emp_name: doc.data().emp_name,
+            vh_no: doc.data().vh_no
         });
-      });
+    });
     return result;
 };
-  
-const SetSlot = async (
-    monDocID,
-    vehicleDocID,
-    slotDocID,
-    employeeCode,
-    employeeName
-  ) => {
+
+// MONTH-YEAR -> DATE -> SLOT -> VEHICLE -> EMP
+const SetSlot = async (slot, vehicle_no, employeePbNo, employeeName) => {
     await db
-      .collection(month)
-      .doc(monDocID)
-      .collection("vehicles")
-      .doc(vehicleDocID)
-      .collection("slots")
-      .doc(slotDocID)
-      .update({
-        is_occupied: true,
-        occupant: employeeCode,
-        occupant_name: employeeName,
-      })
-      .then(function () {
-        console.log("Document successfully updated!");
-      })
-      .catch(function (error) {
-        // The document probably doesn't exist.
-        console.error("Error updating document: ", error);
-    });
+        .collection(monthYear)
+        .doc(currentDate)
+        .collection("slots")
+        .doc(slot)
+        .set({
+          emp_pb_no: employeePbNo,
+          emp_name: employeeName,
+          vh_no: vehicle_no
+        })
+        .then(function () {
+          console.info("Document successfully updated!");
+        })
+        .catch(function (error) {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+      });
 };
 
   
