@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from "moment";
 import { Layout, Row, Col, Card } from 'antd';
 import _ from "lodash";
 

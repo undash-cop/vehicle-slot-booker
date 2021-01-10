@@ -27,7 +27,7 @@ const GetVehicles = async () => {
 
 const GetSlots = async () => {
     let result = [];
-    let querySnapshot = await db.collection(config.monthYear).doc(config.currentDate).collection('slots').get();
+    let querySnapshot = await db.collection(config.monthYear).doc(config.currentDay).collection('slots').get();
     _.forEach(querySnapshot.docs, (doc) => {
         result.push({
             slot: doc.id,
@@ -44,7 +44,7 @@ const GetSlots = async () => {
 const SetSlot = async (slot, vehicle_no, employeePbNo, employeeName) => {
     await db
         .collection(config.monthYear)
-        .doc(config.currentDate)
+        .doc(config.currentDay)
         .collection("slots")
         .doc(slot)
         .set({
