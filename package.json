@@ -2,6 +2,10 @@
   "name": "vehicle-slot-booker",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Shobha Y",
+    "email": "shobhajune241997@gmail.com"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/react": "^11.2.3",
