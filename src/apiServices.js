@@ -34,14 +34,16 @@ const GetSlots = async () => {
             is_occupied: true,
             emp_pb_no: doc.data().emp_pb_no,
             emp_name: doc.data().emp_name,
-            vh_no: doc.data().vh_no
+            vh_no: doc.data().vh_no,
+            from: doc.data().from,
+            to: doc.data().to
         });
     });
     return result;
 };
 
 // MONTH-YEAR -> DATE -> SLOT -> VEHICLE -> EMP
-const SetSlot = async (slot, vehicle_no, employeePbNo, employeeName) => {
+const SetSlot = async (slot, vehicle_no, employeePbNo, employeeName, from, to) => {
     await db
         .collection(config.monthYear)
         .doc(config.currentDay)
@@ -50,7 +52,9 @@ const SetSlot = async (slot, vehicle_no, employeePbNo, employeeName) => {
         .set({
           emp_pb_no: employeePbNo,
           emp_name: employeeName,
-          vh_no: vehicle_no
+          vh_no: vehicle_no,
+          from: from,
+          to: to
         })
         .then(function () {
           console.info("Document successfully updated!");

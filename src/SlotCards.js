@@ -22,6 +22,8 @@ class SlotCards extends React.Component {
                 emp_pb_no: '',
                 start: moment().format('hh:mm a'),
                 end: moment().add(30, 'minutes').format('hh:mm a'),
+                from: '',
+                to: ''
             },
             isModalVisible: false
         };
@@ -43,6 +45,8 @@ class SlotCards extends React.Component {
                         _.set(slot, ['emp_name'], os.emp_name);
                         _.set(slot, ['vh_no'], os.vh_no);
                         _.set(slot, ['doc_id'], os.doc_id);
+                        _.set(slot, ['from'], os.from);
+                        _.set(slot, ['to'], os.to);
                     }
                 });
             });
@@ -62,7 +66,9 @@ class SlotCards extends React.Component {
                 emp_name: '',
                 emp_pb_no: '',
                 start: moment().format('hh:mm a'),
-                end: moment().add(30, 'minutes').format('hh:mm a')
+                end: moment().add(30, 'minutes').format('hh:mm a'),
+                from: '',
+                to: ''
             },
             isModalVisible: false
         });
@@ -70,13 +76,15 @@ class SlotCards extends React.Component {
 
     handleBookSlot = async () => {
         let { newSlot, vehicle } = this.state;
-        await SetSlot(`${newSlot.start} - ${newSlot.end} - ${vehicle.vehicle_no}`, vehicle.vehicle_no, newSlot.emp_pb_no, newSlot.emp_name);
+        await SetSlot(`${newSlot.start} - ${newSlot.end} - ${vehicle.vehicle_no}`, vehicle.vehicle_no, newSlot.emp_pb_no, newSlot.emp_name, newSlot.from, newSlot.to);
         this.setState({ 
             newSlot: {
                 emp_name: '',
                 emp_pb_no: '',
                 start: moment().format('hh:mm a'),
-                end: moment().add(30, 'minutes').format('hh:mm a')
+                end: moment().add(30, 'minutes').format('hh:mm a'),
+                from: '',
+                to: ''
             },
             isModalVisible: false
         });
@@ -91,9 +99,11 @@ class SlotCards extends React.Component {
                 {_.map(slots, (slot, id) => (
                     <Card.Grid
                         style={{
-                            width: "16%",
-                            margin: "4px",
+                            width: "11%",
+                            margin: "5px",
                             textAlign: "center",
+                            fontSize: "11px",
+                            padding: "11px",
                             backgroundColor: !_.get(slot, 'is_occupied', false) ? "#95de64" : "#ff7875",
                         }}
                         key={id}
@@ -113,15 +123,15 @@ class SlotCards extends React.Component {
                 
 
                 <Modal
-                    title="Enter Employee Details"
+                    title={!_.get(newSlot, ['is_occupied'], false) ? "Enter Employee Details" : "Slot is already booked"}
                     visible={isModalVisible}
                     onOk={() => !_.get(newSlot, ['is_occupied'], false) ? this.handleBookSlot(): this.handleCancel()}
                     onCancel={() => this.handleCancel()}
+                    width={300}
                 >
                     <Title level={5}>Employee emp_name</Title>
                     <Input
                         placeholder="Enter Employee Name"
-                        size="large"
                         value={newSlot.emp_name}
                         disabled={_.get(newSlot, ['is_occupied'], false)}
                         prefix={<UserOutlined />}
@@ -130,7 +140,6 @@ class SlotCards extends React.Component {
                     <Title level={5}> Employee PB.No</Title>
                     <Input
                         placeholder="Enter Employee PB.No"
-                        size="large"
                         prefix={<UserOutlined />}
                         value={newSlot.emp_pb_no}
                         disabled={_.get(newSlot, ['is_occupied'], false)}
@@ -138,21 +147,19 @@ class SlotCards extends React.Component {
                     />
                     <Title level={5}> From</Title>
                         <Input
-                        placeholder="Enter From Time"
-                        size="large"
+                        placeholder="Enter From"
                         prefix={<UserOutlined />}
-                        value={newSlot.start}
+                        value={newSlot.from}
                         disabled={_.get(newSlot, ['is_occupied'], false)}
-                        onChange={(e) => this.onValueChange('start', e.target.value)}
+                        onChange={(e) => this.onValueChange('from', e.target.value)}
                     />
                     <Title level={5}> To</Title>
                     <Input
-                        placeholder="Enter To Time"
-                        size="large"
+                        placeholder="Enter To"
                         prefix={<UserOutlined />}
                         disabled={_.get(newSlot, ['is_occupied'], false)}
-                        value={newSlot.end}
-                        onChange={(e) => this.onValueChange('end', e.target.value)}
+                        value={newSlot.to}
+                        onChange={(e) => this.onValueChange('to', e.target.value)}
                     />
                 </Modal>
             </Row>  
