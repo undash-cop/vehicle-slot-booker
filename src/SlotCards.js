@@ -99,11 +99,11 @@ class SlotCards extends React.Component {
                 {_.map(slots, (slot, id) => (
                     <Card.Grid
                         style={{
-                            width: "11%",
+                            width: "10%",
                             margin: "5px",
                             textAlign: "center",
-                            fontSize: "11px",
-                            padding: "11px",
+                            fontSize: "10px",
+                            padding: "8px",
                             backgroundColor: !_.get(slot, 'is_occupied', false) ? "#95de64" : "#ff7875",
                         }}
                         key={id}

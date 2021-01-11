@@ -37,7 +37,7 @@ class App extends React.Component {
           </div>
           <div></div>
         </Header>
-        <Content style={{ padding: '0 50px', minHeight: '90VH', marginTop: '20VH' }}>
+        <Content style={{ padding: '0 20px', minHeight: '80VH', marginTop: '11VH' }}>
           {!_.isEmpty(vehicles) && _.map(vehicles, (vehicle, id) => <Row key={id}>
             <Col lg style={{ width: '100%', paddingBottom: '30px'}}>
               <Card title={vehicle.vehicle_name}>
