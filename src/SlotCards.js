@@ -127,7 +127,7 @@ class SlotCards extends React.Component {
                     visible={isModalVisible}
                     onOk={() => !_.get(newSlot, ['is_occupied'], false) ? this.handleBookSlot(): this.handleCancel()}
                     onCancel={() => this.handleCancel()}
-                    width={300}
+                    width={350}
                 >
                     <Title level={5}>Employee emp_name</Title>
                     <Input
