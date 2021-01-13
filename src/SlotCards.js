@@ -123,21 +123,23 @@ class SlotCards extends React.Component {
                 
 
                 <Modal
-                    title={!_.get(newSlot, ['is_occupied'], false) ? "Enter Employee Details" : "Slot is already booked"}
+                    title={ !_.get(newSlot, ['is_occupied'], false ) ?  <div>Enter Employee Details</div> : <div style={{color: 'red'}}>Slot already booked</div>}
+                    style={{ textAlign:"center"}}
                     visible={isModalVisible}
                     onOk={() => !_.get(newSlot, ['is_occupied'], false) ? this.handleBookSlot(): this.handleCancel()}
                     onCancel={() => this.handleCancel()}
                     width={350}
                 >
-                    <Title level={5}>Employee emp_name</Title>
+                    <Title level={5} style={{textAlign:"left"}}>Employee Name</Title>
                     <Input
                         placeholder="Enter Employee Name"
                         value={newSlot.emp_name}
                         disabled={_.get(newSlot, ['is_occupied'], false)}
                         prefix={<UserOutlined />}
                         onChange={(e) => this.onValueChange('emp_name', e.target.value)}
+                   
                     />
-                    <Title level={5}> Employee PB.No</Title>
+                    <Title level={5} style={{textAlign:"left"}}> Employee PB.No</Title>
                     <Input
                         placeholder="Enter Employee PB.No"
                         prefix={<UserOutlined />}
@@ -145,7 +147,7 @@ class SlotCards extends React.Component {
                         disabled={_.get(newSlot, ['is_occupied'], false)}
                         onChange={(e) => this.onValueChange('emp_pb_no', e.target.value)}
                     />
-                    <Title level={5}> From</Title>
+                    <Title level={5} style={{textAlign:"left"}}> From</Title>
                         <Input
                         placeholder="Enter From"
                         prefix={<UserOutlined />}
@@ -153,7 +155,7 @@ class SlotCards extends React.Component {
                         disabled={_.get(newSlot, ['is_occupied'], false)}
                         onChange={(e) => this.onValueChange('from', e.target.value)}
                     />
-                    <Title level={5}> To</Title>
+                    <Title level={5} style={{textAlign:"left"}}> To</Title>
                     <Input
                         placeholder="Enter To"
                         prefix={<UserOutlined />}
